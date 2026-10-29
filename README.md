@@ -116,4 +116,9 @@ Execute os testes com:
 python3 -m unittest -v
 ```
 
-No Windows, substitua `python3` por `py`. Os testes verificam arredondamento, fragmentação, memória cheia, recusa sem alocação parcial, continuidade após recusa, tabelas e limites da tradução.
+No Windows, substitua `python3` por `py`. São **20 testes automatizados**, incluindo verificações com vários casos dentro do mesmo teste:
+
+- `test_paginacao.py`: 13 testes dos cálculos, tabelas e alocação. Incluem todos os 8.192 tamanhos que cabem na memória, 6.400 casos nas 256 combinações de quadros livres/ocupados e a tradução de todos os 8.192 endereços de um processo que ocupa a memória inteira.
+- `test_terminal.py`: 7 testes que executam o programa completo. Verificam entradas inválidas, memória cheia, nenhum processo alocado, recusa seguida de uma alocação válida, fim da entrada e o exemplo documentado.
+
+Os testes de terminal usam o mesmo interpretador Python que executa a suíte e não precisam de pacotes externos. A saída real da suíte está em [resultado_testes.txt](resultado_testes.txt).

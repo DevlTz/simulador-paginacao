@@ -3,6 +3,10 @@
 TAMANHO_MEMORIA = 8192
 TAMANHO_PAGINA = 1024
 QUANTIDADE_QUADROS = TAMANHO_MEMORIA // TAMANHO_PAGINA
+# Ordem fixa calculada uma única vez para os oito quadros da simulação.
+ORDEM_QUADROS = tuple(range(0, QUANTIDADE_QUADROS, 2)) + tuple(
+    range(1, QUANTIDADE_QUADROS, 2)
+)
 
 
 def calcular_paginas(tamanho):
@@ -26,8 +30,7 @@ def alocar_processo(pid, tamanho, memoria):
 
     # Visita os quadros pares e depois os ímpares para demonstrar que as
     # páginas podem ocupar quadros não consecutivos. Não é substituição.
-    ordem = list(range(0, len(memoria), 2)) + list(range(1, len(memoria), 2))
-    livres = [quadro for quadro in ordem if memoria[quadro] is None]
+    livres = [quadro for quadro in ORDEM_QUADROS if memoria[quadro] is None]
 
     if paginas > len(livres):
         return processo
@@ -50,8 +53,7 @@ def traduzir_endereco(processo, endereco_logico):
             f"Endereço inválido. Use de 0 a {processo['tamanho'] - 1}."
         )
 
-    pagina = endereco_logico // TAMANHO_PAGINA
-    deslocamento = endereco_logico % TAMANHO_PAGINA
+    pagina, deslocamento = divmod(endereco_logico, TAMANHO_PAGINA)
     quadro = processo["tabela"][pagina]
     endereco_fisico = quadro * TAMANHO_PAGINA + deslocamento
     return pagina, deslocamento, quadro, endereco_fisico
@@ -100,11 +102,12 @@ def mostrar_resumo(memoria, processos):
             descricao = f"P{pid}, página {pagina}"
         print(f"Quadro {quadro} | bytes {inicio:>4} a {fim:>4} | {descricao}")
 
-    utilizados = sum(ocupante is not None for ocupante in memoria)
+    livres = memoria.count(None)
+    utilizados = len(memoria) - livres
     fragmentacao_total = sum(p["fragmentacao"] for p in processos if p["alocado"])
     print("\n=== RESUMO ===")
     print(f"Quadros utilizados: {utilizados}")
-    print(f"Quadros livres: {len(memoria) - utilizados}")
+    print(f"Quadros livres: {livres}")
     print(f"Fragmentação interna total: {fragmentacao_total} bytes")
 
 

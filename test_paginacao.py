@@ -79,6 +79,66 @@ class TestPaginacao(unittest.TestCase):
         self.assertEqual(sum(p["fragmentacao"] for p in processos), 1120)
         self.assertEqual(processos[3]["tabela"], [3, 5])
 
+    def test_todos_os_tamanhos_que_cabem_na_memoria(self):
+        for tamanho in range(1, 8193):
+            with self.subTest(tamanho=tamanho):
+                memoria = [None] * 8
+                p = alocar_processo(1, tamanho, memoria)
+                self.assertTrue(p["alocado"])
+                self.assertEqual(len(set(p["tabela"])), p["paginas"])
+                self.assertEqual(p["paginas"] * 1024, tamanho + p["fragmentacao"])
+                self.assertTrue(0 <= p["fragmentacao"] < 1024)
+                for endereco in {0, tamanho - 1}:
+                    pagina, deslocamento, quadro, fisico = traduzir_endereco(p, endereco)
+                    self.assertEqual(memoria[quadro], (1, pagina))
+                    self.assertEqual(pagina * 1024 + deslocamento, endereco)
+                    self.assertEqual(divmod(fisico, 1024), (quadro, deslocamento))
+                    self.assertTrue(0 <= fisico < 8192)
+                for endereco in [-1, tamanho]:
+                    with self.assertRaises(ValueError):
+                        traduzir_endereco(p, endereco)
+
+    def test_todas_as_combinacoes_de_quadros_ocupados(self):
+        # Cada um dos 8 bits indica se um quadro já está ocupado.
+        # Testa também um byte antes, exatamente e um byte após cada limite.
+        tamanhos = sorted({1, 8193} | {
+            limite + ajuste
+            for limite in range(1024, 8193, 1024)
+            for ajuste in [-1, 0, 1]
+        })
+        for mascara in range(256):
+            antes = [(99, i) if mascara & (1 << i) else None for i in range(8)]
+            livres = antes.count(None)
+            for tamanho in tamanhos:
+                with self.subTest(mascara=mascara, tamanho=tamanho):
+                    memoria = antes.copy()
+                    p = alocar_processo(1, tamanho, memoria)
+                    self.assertEqual(p["alocado"], tamanho <= livres * 1024)
+                    if not p["alocado"]:
+                        self.assertEqual(memoria, antes)
+                        self.assertEqual(p["tabela"], [])
+                        self.assertEqual(p["fragmentacao"], 0)
+                        continue
+                    self.assertEqual(len(set(p["tabela"])), p["paginas"])
+                    self.assertEqual(memoria.count(None), livres - p["paginas"])
+                    for pagina, quadro in enumerate(p["tabela"]):
+                        self.assertIsNone(antes[quadro])
+                        self.assertEqual(memoria[quadro], (1, pagina))
+                    for quadro, valor in enumerate(antes):
+                        if valor is not None:
+                            self.assertEqual(memoria[quadro], valor)
+
+    def test_todos_os_enderecos_sem_colisoes(self):
+        p = alocar_processo(1, 8192, self.memoria)
+        fisicos = set()
+        for endereco in range(8192):
+            pagina, deslocamento, quadro, fisico = traduzir_endereco(p, endereco)
+            self.assertEqual(self.memoria[quadro], (1, pagina))
+            self.assertEqual(pagina * 1024 + deslocamento, endereco)
+            self.assertEqual(divmod(fisico, 1024), (quadro, deslocamento))
+            fisicos.add(fisico)
+        self.assertEqual(fisicos, set(range(8192)))
+
 
 if __name__ == "__main__":
     unittest.main()

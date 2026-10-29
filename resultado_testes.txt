@@ -1,0 +1,27 @@
+$ python3 -m unittest -v
+
+test_arredondamento (test_paginacao.TestPaginacao.test_arredondamento) ... ok
+test_cenario_demonstracao (test_paginacao.TestPaginacao.test_cenario_demonstracao) ... ok
+test_exemplo_enunciado (test_paginacao.TestPaginacao.test_exemplo_enunciado) ... ok
+test_memoria_completa_sem_fragmentacao (test_paginacao.TestPaginacao.test_memoria_completa_sem_fragmentacao) ... ok
+test_processo_maior_que_memoria (test_paginacao.TestPaginacao.test_processo_maior_que_memoria) ... ok
+test_recusa_sem_alocacao_parcial_e_continuidade (test_paginacao.TestPaginacao.test_recusa_sem_alocacao_parcial_e_continuidade) ... ok
+test_rejeita_enderecos_fora_do_processo (test_paginacao.TestPaginacao.test_rejeita_enderecos_fora_do_processo) ... ok
+test_rejeita_traducao_de_processo_nao_alocado (test_paginacao.TestPaginacao.test_rejeita_traducao_de_processo_nao_alocado) ... ok
+test_tamanho_invalido (test_paginacao.TestPaginacao.test_tamanho_invalido) ... ok
+test_todas_as_combinacoes_de_quadros_ocupados (test_paginacao.TestPaginacao.test_todas_as_combinacoes_de_quadros_ocupados) ... ok
+test_todos_os_enderecos_sem_colisoes (test_paginacao.TestPaginacao.test_todos_os_enderecos_sem_colisoes) ... ok
+test_todos_os_tamanhos_que_cabem_na_memoria (test_paginacao.TestPaginacao.test_todos_os_tamanhos_que_cabem_na_memoria) ... ok
+test_traducao_e_limites_de_pagina (test_paginacao.TestPaginacao.test_traducao_e_limites_de_pagina) ... ok
+test_entradas_invalidas_e_nova_tentativa (test_terminal.TestTerminal.test_entradas_invalidas_e_nova_tentativa) ... ok
+test_exemplo_documentado (test_terminal.TestTerminal.test_exemplo_documentado) ... ok
+test_fim_da_entrada_sem_traceback (test_terminal.TestTerminal.test_fim_da_entrada_sem_traceback) ... ok
+test_nenhum_processo_alocado (test_terminal.TestTerminal.test_nenhum_processo_alocado) ... ok
+test_oito_processos_de_um_byte_e_recusa_do_nono (test_terminal.TestTerminal.test_oito_processos_de_um_byte_e_recusa_do_nono) ... ok
+test_oito_processos_sem_fragmentacao (test_terminal.TestTerminal.test_oito_processos_sem_fragmentacao) ... ok
+test_recusa_e_alocacao_do_proximo_processo (test_terminal.TestTerminal.test_recusa_e_alocacao_do_proximo_processo) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.381s
+
+OK
