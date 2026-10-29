@@ -1,0 +1,95 @@
+=== SIMULADOR DE PAGINAÇÃO ===
+Memória física: 8192 bytes
+Página/quadro: 1024 bytes
+Quantidade de quadros: 8
+
+Quantidade de processos: abc
+Entrada inválida. Digite um número inteiro.
+Quantidade de processos: 0
+Digite um valor maior ou igual a 1.
+Quantidade de processos: 4
+
+Tamanho de P1 em bytes: -1
+Digite um valor maior ou igual a 1.
+
+Tamanho de P1 em bytes: 2500
+
+Processo P1: 2500 bytes
+Páginas necessárias: 3
+Tabela de páginas (numeração iniciada em zero):
+Página | Quadro
+     0 |      0
+     1 |      2
+     2 |      4
+Fragmentação interna: 572 bytes
+
+Tamanho de P2 em bytes: 2048
+
+Processo P2: 2048 bytes
+Páginas necessárias: 2
+Tabela de páginas (numeração iniciada em zero):
+Página | Quadro
+     0 |      6
+     1 |      1
+Fragmentação interna: 0 bytes
+
+Tamanho de P3 em bytes: 4000
+
+Processo P3: 4000 bytes
+Páginas necessárias: 4
+Não pôde ser alocado: quadros livres insuficientes.
+
+Tamanho de P4 em bytes: 1500
+
+Processo P4: 1500 bytes
+Páginas necessárias: 2
+Tabela de páginas (numeração iniciada em zero):
+Página | Quadro
+     0 |      3
+     1 |      5
+Fragmentação interna: 548 bytes
+
+=== MEMÓRIA FÍSICA ===
+Quadro 0 | bytes    0 a 1023 | P1, página 0
+Quadro 1 | bytes 1024 a 2047 | P2, página 1
+Quadro 2 | bytes 2048 a 3071 | P1, página 1
+Quadro 3 | bytes 3072 a 4095 | P4, página 0
+Quadro 4 | bytes 4096 a 5119 | P1, página 2
+Quadro 5 | bytes 5120 a 6143 | P4, página 1
+Quadro 6 | bytes 6144 a 7167 | P2, página 0
+Quadro 7 | bytes 7168 a 8191 | livre
+
+=== RESUMO ===
+Quadros utilizados: 7
+Quadros livres: 1
+Fragmentação interna total: 1120 bytes
+
+=== TRADUÇÃO DE ENDEREÇOS ===
+Informe o número do processo (ex.: 1 para P1). Use 0 para sair.
+
+Processo: 3
+Esse processo não foi alocado. Escolha outro processo.
+
+Processo: 9
+Digite um valor menor ou igual a 4.
+
+Processo: 1
+Endereço lógico de P1 (0 a 2499): -1
+Digite um valor maior ou igual a 0.
+Endereço lógico de P1 (0 a 2499): 2500
+Digite um valor menor ou igual a 2499.
+Endereço lógico de P1 (0 a 2499): 2300
+Página: 2
+Deslocamento: 252 bytes
+Quadro: 4
+Endereço físico: 4 * 1024 + 252 = 4348
+
+Processo: 4
+Endereço lógico de P4 (0 a 1499): 1499
+Página: 1
+Deslocamento: 475 bytes
+Quadro: 5
+Endereço físico: 5 * 1024 + 475 = 5595
+
+Processo: 0
+Simulação encerrada.
